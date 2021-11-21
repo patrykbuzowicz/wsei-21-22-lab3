@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Wsei.Lab3.Entities.ProductEntity>
+
+<h2>List of products</h2>
+
+<form method="GET" class="form-inline mb-2">
+    <input type="text" name="name" placeholder="Filter by name" class="form-control" />
+    <button type="submit" class="btn btn-primary ml-2">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Is visible?</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@(item.IsVisible ? "Yes" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>
