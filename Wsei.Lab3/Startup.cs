@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Wsei.Lab3.Database;
+using Wsei.Lab3.Middleware;
+using Wsei.Lab3.Services;
 
 namespace Wsei.Lab3
 {
@@ -29,11 +31,16 @@ namespace Wsei.Lab3
             services.AddDbContext<AppDbContext>(config =>
                 config.UseSqlServer(Configuration.GetConnectionString("Application"))
             );
+
+            services.AddTransient<IProductService, ProductService>();
+            services.AddSingleton<IMetricsCollector, MetricsCollector>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<CollectMetricsMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
