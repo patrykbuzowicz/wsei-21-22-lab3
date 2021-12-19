@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,5 +15,7 @@ namespace Wsei.Lab3.Entities
         public string Description { get; set; }
 
         public bool IsVisible { get; set; }
+
+        public IdentityUser Owner { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wsei.Lab3.Database;
 
 namespace Wsei.Lab3.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211219074350_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,12 +237,7 @@ namespace Wsei.Lab3.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("Products");
                 });
@@ -294,15 +291,6 @@ namespace Wsei.Lab3.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Wsei.Lab3.Entities.ProductEntity", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
-
-                    b.Navigation("Owner");
                 });
 #pragma warning restore 612, 618
         }
