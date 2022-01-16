@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Wsei.Lab3.Database;
+using Wsei.Lab3.Hubs;
 using Wsei.Lab3.Middleware;
 using Wsei.Lab3.Services;
 
@@ -28,6 +29,7 @@ namespace Wsei.Lab3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSignalR();
 
             services.AddDbContext<AppDbContext>(config =>
                 config.UseSqlServer(Configuration.GetConnectionString("Application"))
@@ -37,6 +39,8 @@ namespace Wsei.Lab3
 
             services.AddTransient<IProductService, ProductService>();
             services.AddSingleton<IMetricsCollector, MetricsCollector>();
+
+            services.AddSingleton<IChatMessagesRepository, ChatMessagesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +69,8 @@ namespace Wsei.Lab3
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapHub<ChatHub>("/chat/hub");
             });
         }
     }

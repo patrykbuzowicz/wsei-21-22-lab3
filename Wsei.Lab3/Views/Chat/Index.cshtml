@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Wsei.Lab3.Entities.ChatMessageEntity>
+
+<h1>Global chat</h1>
+
+<div class="d-flex flex-column h-100">
+    <div class="flex-grow-1 card mb-1">
+        <div class="card-body p-2 overflow-auto" id="messages" style="max-height: 30rem">
+            @foreach (var message in Model)
+            {
+                <div class="p-2">@message.Username says: @message.Content</div>
+            }
+        </div>
+    </div>
+    <div class="flex-grow-0">
+        <form class="form-inline" id="message-form">
+            <div class="input-group w-100">
+                <input type="text" class="form-control" name="message" autocomplete="off" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-info">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/aspnet-signalr/signalr.js"></script>
+<script src="~/js/chat.js"></script>
